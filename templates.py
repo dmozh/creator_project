@@ -3,7 +3,9 @@ entry = \
 from aiohttp import web
 import argparse
 from app import create_app
-
+parser = argparse.ArgumentParser(description="aiohttp server example")
+parser.add_argument('--path')
+parser.add_argument('--port')
 app = create_app()
 if __name__ == '__main__':
     args = parser.parse_args()
