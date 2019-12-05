@@ -48,6 +48,7 @@ import credentials as crs
 
 def setup_routes(app):
     #app.router.add_route('GET/POST', f'%url%', response.%func%)
+    #app.router.add_route('GET/POST', f'%url%', response.websocket_handler)
     pass
 """
 
@@ -77,5 +78,27 @@ async def test_json(request):
         return web.json_response(response_msg, headers=headers)
     else:
         return web.Response(text='get', headers=headers)
+        
+        
+async def websocket_handler(request):
+
+    ws = web.WebSocketResponse()
+    await ws.prepare(request)
+    print(request.url)
+    async for msg in ws:
+        print(msg)
+        if msg.type == WSMsgType.TEXT:
+            if msg.data == 'close':
+                await ws.close()
+            else:
+                print(msg.data)
+                await ws.send_str(msg.data + '/answer')
+        elif msg.type == WSMsgType.ERROR:
+            print('ws connection closed with exception %s' %
+                  ws.exception())
+
+    print('websocket connection closed')
+    print(ws)
+    return ws
 """
 

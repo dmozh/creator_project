@@ -50,6 +50,10 @@ def tree_project(path, type, name):
                 file = open(root_prj + slash + 'utils.py', 'w')
                 file.write(templates.utils)
                 file.close()
+
+                file = open(root_prj+slash+'requirements.txt', 'w')
+                file.write(templates.utils)
+                file.close()
             except OSError:
                 print(OSError.errno)
             finally:
