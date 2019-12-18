@@ -1,4 +1,21 @@
 import sys, os, templates
+import argparse
+
+parser = argparse.ArgumentParser('merge arguments')
+parser.add_argument('-name')
+parser.add_argument('-path')
+parser.add_argument('-type')
+
+args = parser.parse_args()
+print(args)
+
+
+tmp_path = sys.argv[0].replace('/', '\\')
+split_tmp_path = tmp_path.split('\\')
+split_tmp_path.reverse()
+PATH = tmp_path[:tmp_path.find(split_tmp_path[0])]
+print(PATH)
+
 
 def main():
     type_project = ''
@@ -8,22 +25,17 @@ def main():
     # d_path = """C:/Projects/"""
 
     params = {}
-    key = ''
     params['-p'] = d_path
-    for i in sys.argv:
-        if (i == '-n') or (i == '-p') or (i == '-t'):
-            key = i
-            continue
-        else:
-            if key != '':
-                if key=='-n':
-                    name = i
-                elif key=='-p':
-                    path = i
-                elif key == '-t':
-                    type_project = i
-    if path == '':
+    if args.name:
+        name = args.name
+
+    if args.path:
+        path = args.path
+    else:
         path = d_path
+
+    if args.type:
+        type_project = args.type
 
     tree_project(path, type_project, name)
 
