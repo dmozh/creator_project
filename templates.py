@@ -73,7 +73,7 @@ from . import response
 
 response = \
 """
-from aiohttp import web
+from aiohttp import web, WSMsgType
 import json
 
 # this file using for response from server
@@ -121,3 +121,10 @@ async def websocket_handler(request):
     return ws
 """
 
+requirements = """
+cryptography
+aiohttp
+gunicorn
+#pyodbc
+#psycopg2
+"""
