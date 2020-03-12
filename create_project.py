@@ -45,6 +45,7 @@ def tree_project(path, type, name):
     root_prj = path+slash+name
     app = root_prj+slash+'app'
     views = app+slash+'views'
+    sql = app+slash+'sql'
     #creates
     if type != '':
         if type == 'aiohttp':
@@ -97,16 +98,36 @@ def tree_project(path, type, name):
                 file.write(templates.views_init)
                 file.close()
 
-                file = open(views + slash + 'response.py', 'w')
-                file.write(templates.response)
+                file = open(views + slash + 'http_response.py', 'w')
+                file.write(templates.http_response)
+                file.close()
+
+                file = open(views + slash + 'ws_response.py', 'w')
+                file.write(templates.ws_response)
                 file.close()
 
             except OSError:
                 print(OSError.errno)
             finally:
                 print('Views dir is created')
+
+            try:
+                os.mkdir(sql)
+
+                file = open(views + slash + 'sql_handler.py', 'w')
+                file.write(templates.sql_handler)
+                file.close()
+
+                file = open(views + slash + 'sql_queries.py', 'w')
+                file.close()
+
+            except OSError:
+                print(OSError.errno)
+            finally:
+                print('SQL dir is created')
         else:
             print('incorrect key')
+
 
 if __name__ == "__main__":
     main()

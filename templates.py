@@ -57,12 +57,13 @@ async def create_app():
 
 routes = \
 """
-from .views import response
+from .views import http_response
+from .views import ws_response
 import credentials as crs
 
 def setup_routes(app):
-    #app.router.add_route('GET/POST', f'%url%', response.%func%)
-    #app.router.add_route('GET/POST', f'%url%', response.websocket_handler)
+    #app.router.add_route('GET/POST', f'%url%', http_response.test)
+    #app.router.add_route('GET/POST', f'%url%', ws_response.websocket_handler)
     pass
 """
 
@@ -71,9 +72,10 @@ views_init = \
 from . import response
 """
 
-response = \
+http_response = \
 """
-from aiohttp import web, WSMsgType
+from app.sql.sql_handler import sql_exec as handle
+from aiohttp import web
 import json
 
 # this file using for response from server
@@ -92,18 +94,27 @@ async def test_json(request):
         return web.json_response(response_msg, headers=headers)
     else:
         return web.Response(text='get', headers=headers)
-        
+"""
+
+ws_response = \
+"""
+from aiohttp import web, WSMsgType
+import json, asyncio
+
+
 async def broadcast(request, msg):
     # while True:
     for ws in request.app.wslist:
         await ws.send_str(msg)
     # await asyncio.sleep(10)
-        
+
 async def websocket_handler(request):
 
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     print(request.url)
+    request.app.wslist.append(ws)
+    print(request.app.wslist)
     async for msg in ws:
         print(msg)
         if msg.type == WSMsgType.TEXT:
@@ -111,6 +122,7 @@ async def websocket_handler(request):
                 await ws.close()
             else:
                 print(msg.data)
+                #await broadcast(request, tmp_val)
                 await ws.send_str(msg.data + '/answer')
         elif msg.type == WSMsgType.ERROR:
             print('ws connection closed with exception %s' %
@@ -118,8 +130,25 @@ async def websocket_handler(request):
 
     print('websocket connection closed')
     print(ws)
-    return ws
+    return ws"""
+
+sql_handler = \
 """
+#imports
+#
+#
+
+
+async def sql_exec(query, **kwargs):
+    '''
+    Function to handle sql queries
+    :param query: string key query
+    :param kwargs: dict any kwargs
+    :return: bool, json
+    '''
+    pass
+"""
+
 
 requirements = """
 cryptography
