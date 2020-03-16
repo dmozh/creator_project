@@ -69,7 +69,7 @@ def setup_routes(app):
 
 views_init = \
 """
-from . import response
+from . import http_response, ws_response
 """
 
 http_response = \
