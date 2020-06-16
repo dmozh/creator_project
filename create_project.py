@@ -1,7 +1,7 @@
 import sys, os, templates
 import argparse
 
-parser = argparse.ArgumentParser('merge arguments')
+parser = argparse.ArgumentParser('arguments')
 parser.add_argument('-name')
 parser.add_argument('-path')
 parser.add_argument('-type')
@@ -114,11 +114,11 @@ def tree_project(path, type, name):
             try:
                 os.mkdir(sql)
 
-                file = open(views + slash + 'sql_handler.py', 'w')
+                file = open(sql + slash + 'sql_handler.py', 'w')
                 file.write(templates.sql_handler)
                 file.close()
 
-                file = open(views + slash + 'sql_queries.py', 'w')
+                file = open(sql + slash + 'sql_queries.py', 'w')
                 file.close()
 
             except OSError:
