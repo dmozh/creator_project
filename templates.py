@@ -57,19 +57,55 @@ async def create_app():
 
 routes = \
 """
-from .views import http_response
-from .views import ws_response
+from .views import http, websocket
 import credentials as crs
 
+
 def setup_routes(app):
-    #app.router.add_route('GET/POST', f'%url%', http_response.test)
-    #app.router.add_route('GET/POST', f'%url%', ws_response.websocket_handler)
-    pass
+    app.router.add_route('GET', f'%url%', http.get_api.test_get.test_json)
+    app.router.add_route('POST', f'%url%', http.post_api.test_post.test_json)
 """
 
 views_init = \
 """
-from . import http_response, ws_response
+from . import http, websocket
+"""
+
+http_init = """from . import get_api, post_api, http_response"""
+websocket_init = """from . import ws_response"""
+
+get_api_init = """from . import test_get"""
+post_api_init = """from . import test_post"""
+
+test_get = """
+from app.sql.sql_handler import sql_exec as handle
+from aiohttp import web
+import json
+
+
+async def test_json(request):
+    headers = {'Access-Control-Allow-Origin': '*'}
+    if request.method == 'GET':
+        response_msg = {}
+
+        response_msg['msg'] = 'test'
+        response_msg['method'] = 'get'
+        return web.json_response(response_msg, headers=headers)
+"""
+test_post = """
+from app.sql.sql_handler import sql_exec as handle
+from aiohttp import web
+import json
+
+
+async def test_json(request):
+    headers = {'Access-Control-Allow-Origin': '*'}
+    if request.method == 'POST':
+        response_msg = {}
+
+        response_msg['msg'] = 'test'
+        response_msg['method'] = 'post'
+        return web.json_response(response_msg, headers=headers)
 """
 
 http_response = \
@@ -78,22 +114,11 @@ from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
 
-# this file using for response from server
 
 async def test(request):
     headers = {'Access-Control-Allow-Origin': '*', 'content-type': 'text/html'}
     response = f'<div>test</div>'
     return web.Response(body=response, headers=headers)
-    
-async def test_json(request):
-    headers = {'Access-Control-Allow-Origin': '*'}
-    if request.method == 'POST':
-        response_msg = {}
-        
-        response_msg['msg'] = 'test'
-        return web.json_response(response_msg, headers=headers)
-    else:
-        return web.Response(text='get', headers=headers)
 """
 
 ws_response = \

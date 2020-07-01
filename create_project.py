@@ -9,7 +9,6 @@ parser.add_argument('-type')
 args = parser.parse_args()
 print(args)
 
-
 tmp_path = sys.argv[0].replace('/', '\\')
 split_tmp_path = tmp_path.split('\\')
 split_tmp_path.reverse()
@@ -39,24 +38,29 @@ def main():
 
     tree_project(path, type_project, name)
 
+
 def tree_project(path, type, name):
     slash = '/'
-    #path to dirs
-    root_prj = path+slash+name
-    app = root_prj+slash+'app'
-    views = app+slash+'views'
-    sql = app+slash+'sql'
-    #creates
+    # path to dirs
+    root_prj = path + slash + name
+    app = root_prj + slash + 'app'
+    views = app + slash + 'views'
+    sql = app + slash + 'sql'
+    http = views + slash + 'http'
+    get_api = http + slash + 'get_api'
+    post_api = http + slash + 'post_api'
+    websocket = views + slash + 'websocket'
+    # creates
     if type != '':
         if type == 'aiohttp':
             try:
                 os.mkdir(root_prj)
 
-                file = open(root_prj+slash+'entry.py', 'w')
+                file = open(root_prj + slash + 'entry.py', 'w')
                 file.write(templates.entry)
                 file.close()
 
-                file = open(root_prj+slash+'credentials.py', 'w')
+                file = open(root_prj + slash + 'credentials.py', 'w')
                 file.write(templates.credentials)
                 file.close()
 
@@ -64,7 +68,7 @@ def tree_project(path, type, name):
                 file.write(templates.utils)
                 file.close()
 
-                file = open(root_prj+slash+'requirements.txt', 'w')
+                file = open(root_prj + slash + 'requirements.txt', 'w')
                 file.write(templates.requirements)
                 file.close()
             except OSError:
@@ -93,16 +97,42 @@ def tree_project(path, type, name):
 
             try:
                 os.mkdir(views)
+                os.mkdir(http)
+                os.mkdir(websocket)
+                os.mkdir(get_api)
+                os.mkdir(post_api)
 
                 file = open(views + slash + '__init__.py', 'w')
                 file.write(templates.views_init)
                 file.close()
 
-                file = open(views + slash + 'http_response.py', 'w')
+                file = open(http + slash + '__init__.py', 'w')
+                file.write(templates.http_init)
+                file.close()
+
+                file = open(get_api + slash + '__init__.py', 'w')
+                file.write(templates.get_api_init)
+                file.close()
+                file = open(get_api + slash + 'test_get.py', 'w')
+                file.write(templates.test_get)
+                file.close()
+
+                file = open(post_api + slash + '__init__.py', 'w')
+                file.write(templates.post_api_init)
+                file.close()
+                file = open(post_api + slash + 'test_post.py', 'w')
+                file.write(templates.test_post)
+                file.close()
+
+                file = open(websocket + slash + '__init__.py', 'w')
+                file.write(templates.websocket_init)
+                file.close()
+
+                file = open(http + slash + 'http_response.py', 'w')
                 file.write(templates.http_response)
                 file.close()
 
-                file = open(views + slash + 'ws_response.py', 'w')
+                file = open(websocket + slash + 'ws_response.py', 'w')
                 file.write(templates.ws_response)
                 file.close()
 
