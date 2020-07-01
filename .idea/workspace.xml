@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b40f0cb4-66c7-4e57-b697-ccf9f7b28a70" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CreatorProjects.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CreatorProjects.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b40f0cb4-66c7-4e57-b697-ccf9f7b28a70" name="Default" comment="upd templates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates.py" beforeDir="false" afterPath="$PROJECT_DIR$/templates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +29,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../firealarmapi" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TESTETETST" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="ServiceViewManager">
@@ -66,7 +63,11 @@
       <workItem from="1584025454427" duration="329000" />
       <workItem from="1584025877783" duration="25000" />
       <workItem from="1584027088451" duration="728000" />
-      <workItem from="1584027962733" duration="1472000" />
+      <workItem from="1584027962733" duration="2621000" />
+      <workItem from="1590398230900" duration="806000" />
+      <workItem from="1592300846320" duration="1070000" />
+      <workItem from="1592302000791" duration="1061000" />
+      <workItem from="1593616838053" duration="2171000" />
     </task>
     <task id="LOCAL-00001" summary="add git ignore">
       <created>1571647864906</created>
@@ -117,7 +118,28 @@
       <option name="project" value="LOCAL" />
       <updated>1584028018712</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="upd templates">
+      <created>1584340235867</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1584340235867</updated>
+    </task>
+    <task id="LOCAL-00009" summary="upd templates">
+      <created>1592302043400</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1592302043400</updated>
+    </task>
+    <task id="LOCAL-00010" summary="upd templates, add new structure">
+      <created>1593619069802</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1593619069802</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,27 +149,27 @@
     <MESSAGE value="add git ignore" />
     <MESSAGE value="upd entry.py template" />
     <MESSAGE value="add argparse" />
-    <MESSAGE value="upd templates" />
     <MESSAGE value="upd templates, add new dir" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd templates, add new dir" />
+    <MESSAGE value="upd templates" />
+    <MESSAGE value="upd templates, add new structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd templates, add new structure" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2535" y="115" key="CommitChangelistDialog2" timestamp="1584028017632">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2535" y="115" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1584028017632" />
-    <state x="2660" y="276" key="FileChooserDialogImpl" timestamp="1584099189921">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="276" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1584025782134" />
-    <state x="2660" y="276" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1584099189921" />
-    <state x="461" y="163" key="SettingsEditor" timestamp="1580127184118">
+    <state x="615" y="115" key="CommitChangelistDialog2" timestamp="1593619069042">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="163" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1580127184118" />
-    <state x="2472" y="254" key="Vcs.Push.Dialog.v2" timestamp="1584028021399">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="615" y="115" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1593619069042" />
+    <state x="740" y="276" key="FileChooserDialogImpl" timestamp="1593619251903">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="2472" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1584028021399" />
+    <state x="740" y="276" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1593619251903" />
+    <state x="461" y="163" key="SettingsEditor" timestamp="1592301341266">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1592301341266" />
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1593619164015">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1593619164015" />
   </component>
 </project>

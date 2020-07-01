@@ -62,8 +62,8 @@ import credentials as crs
 
 
 def setup_routes(app):
-    app.router.add_route('GET', f'%url%', http.get_api.test_get.test_json)
-    app.router.add_route('POST', f'%url%', http.post_api.test_post.test_json)
+    app.router.add_route('GET', f'/test_get', http.get_api.test_get.test_json)
+    app.router.add_route('POST', f'/test_post', http.post_api.test_post.test_json)
 """
 
 views_init = \
