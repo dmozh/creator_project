@@ -81,6 +81,7 @@ test_get = """
 from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
+from network import base_request, TypeRequest
 
 
 async def test_json(request):
@@ -96,6 +97,7 @@ test_post = """
 from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
+from network import base_request, TypeRequest
 
 
 async def test_json(request):
@@ -257,6 +259,85 @@ args=("logs/error.log",)
 [formatter_myFormatter]
 format=%(asctime)s - %(name)s - %(filename)s - %(levelname)s - %(message)s
 datefmt=
+'''
+
+network_template = '''
+import requests
+import logger
+import credentials
+from enum import Enum
+
+
+class TypeRequest(Enum):
+    GET = 1
+    POST = 2
+    PUT = 3
+    DELETE = 4
+
+
+class BaseRequest:
+    def __init__(self, host, headers):
+        """
+        Класс запросов
+        :param host: str
+        :param headers: dict
+        """
+        self.host = host
+        self.headers = headers
+
+    def send_request(self, api_url: str, request_type: TypeRequest, headers: dict = None, body: dict = None,
+                     query_params: dict = None):
+        """
+        Общая функция отправки запроса
+        :param api_url: str
+        :param request_type: enum
+        :param headers: dict
+        :param body: dict
+        :param query_params: dict
+        :return: request.Response
+        """
+        if headers is not None:
+            for key, value in self.headers.items():
+                headers[key] = value
+        else:
+            headers = self.headers
+
+        url = f"{self.host}/{api_url}"
+        response = None
+        try:
+            logger.info_logger.info(
+                logger.generate_message(f"{request_type.name} request",
+                                        f"Запрос к {url}\n"
+                                        f"Параметры запроса: {query_params}\n"
+                                        f"Тело запроса: {body}"))
+            if request_type.GET:
+                response = requests.get(url, headers=headers, params=query_params)
+            elif request_type.POST:
+                response = requests.post(url, headers=headers, body=body)
+            if response.status_code == 200:
+                logger.info_logger.info(
+                    logger.generate_message(f"{request_type.name} request",
+                                            f"Запрос к {url} успешно завершен. Код статус: {response.status_code}",
+                                            headers=response.headers))
+            else:
+                logger.info_logger.warning(
+                    logger.generate_message(f"{request_type.name} request", f"Запрос к {url} завершен, но ответ "
+                                                                            f"не был получен из-за ошибки. Код статуса ошибки: {response.status_code}",
+                                            headers=response.headers))
+        except requests.exceptions.ConnectionError as err:
+            logger.info_logger.error(
+                logger.generate_message(f"{request_type.name} request",
+                                        f"{err}\nЗапрос к {url} не смог получить ответа. Код статус: {500}"))
+        except TimeoutError as e:
+            logger.info_logger.error(
+                logger.generate_message(f"{request_type.name} request",
+                                        f"{e}\nЗапрос к {url} не смог получить ответа. Код статус: {500}"))
+        except Exception as exception:
+            logger.traceback_logger.critical(exception, exc_info=True)
+        return response
+
+
+base_request = BaseRequest(credentials.HOST_API_URL, {"Authorization": credentials.AUTH_HEADER})
 '''
 
 requirements = """

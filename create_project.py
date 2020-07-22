@@ -68,12 +68,16 @@ def tree_project(path, type_, name):
                 file.write(templates.utils)
                 file.close()
 
-                file = open(root_prj+slash+'logger.py', 'w')
+                file = open(root_prj + slash + 'logger.py', 'w')
                 file.write(templates.logger_template)
                 file.close()
 
-                file = open(root_prj+slash+'logger.conf', 'w')
+                file = open(root_prj + slash + 'logger.conf', 'w')
                 file.write(templates.logger_conf)
+                file.close()
+
+                file = open(root_prj + slash + 'network.py', 'w')
+                file.write(templates.network_template)
                 file.close()
 
                 file = open(root_prj + slash + 'requirements.txt', 'w')
