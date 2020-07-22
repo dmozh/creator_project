@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b40f0cb4-66c7-4e57-b697-ccf9f7b28a70" name="Default" comment="upd templates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_project.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_project.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates.py" beforeDir="false" afterPath="$PROJECT_DIR$/templates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,26 +25,13 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TESTETETST" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -67,7 +56,8 @@
       <workItem from="1590398230900" duration="806000" />
       <workItem from="1592300846320" duration="1070000" />
       <workItem from="1592302000791" duration="1061000" />
-      <workItem from="1593616838053" duration="2171000" />
+      <workItem from="1593616838053" duration="2415000" />
+      <workItem from="1595332534788" duration="2153000" />
     </task>
     <task id="LOCAL-00001" summary="add git ignore">
       <created>1571647864906</created>
@@ -139,26 +129,33 @@
       <option name="project" value="LOCAL" />
       <updated>1593619069802</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="upd templates">
+      <created>1593619562385</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1593619562385</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add git ignore" />
     <MESSAGE value="upd entry.py template" />
     <MESSAGE value="add argparse" />
     <MESSAGE value="upd templates, add new dir" />
-    <MESSAGE value="upd templates" />
     <MESSAGE value="upd templates, add new structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd templates, add new structure" />
+    <MESSAGE value="upd templates" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd templates" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="615" y="115" key="CommitChangelistDialog2" timestamp="1593619069042">
+    <state x="615" y="115" key="CommitChangelistDialog2" timestamp="1593619561767">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="615" y="115" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1593619069042" />
+    <state x="615" y="115" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1593619561767" />
     <state x="740" y="276" key="FileChooserDialogImpl" timestamp="1593619251903">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -167,9 +164,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1592301341266" />
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1593619164015">
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1593619568795">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1593619164015" />
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1593619568795" />
   </component>
 </project>

@@ -1,5 +1,5 @@
 entry = \
-"""  
+    """  
 from aiohttp import web
 import argparse
 from app import create_app
@@ -14,23 +14,23 @@ if __name__ == '__main__':
 """
 
 credentials = \
-"""
+    """
 #this file uses for creds to project
 #its need add to git ignore
 """
 
 utils = \
-"""
+    """
 #this file have util function
 """
 
 app_init = \
-"""
+    """
 from .app import create_app
 """
 
 app = \
-"""
+    """
 import base64
 from cryptography import fernet
 from aiohttp import web
@@ -56,8 +56,8 @@ async def create_app():
 """
 
 routes = \
-"""
-from .views import http, websocket
+    """
+from .api import http, websocket
 import credentials as crs
 
 
@@ -67,7 +67,7 @@ def setup_routes(app):
 """
 
 views_init = \
-"""
+    """
 from . import http, websocket
 """
 
@@ -109,7 +109,7 @@ async def test_json(request):
 """
 
 http_response = \
-"""
+    """
 from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
@@ -122,7 +122,7 @@ async def test(request):
 """
 
 ws_response = \
-"""
+    """
 from aiohttp import web, WSMsgType
 import json, asyncio
 
@@ -158,7 +158,7 @@ async def websocket_handler(request):
     return ws"""
 
 sql_handler = \
-"""
+    """
 #imports
 #
 #
@@ -174,10 +174,95 @@ async def sql_exec(query, **kwargs):
     pass
 """
 
+logger_template = '''
+import logging
+import logging.config
+import os
+
+
+def init_logger():
+    """
+    Инициализция логера
+    :return:
+    """
+    if os.path.exists("logs"):
+        pass
+    else:
+        os.mkdir("logs")
+    logging.config.fileConfig('logger.conf')
+    print("Init loggers")
+    return logging.getLogger("infoLogger"), logging.getLogger("errorLogger")
+
+
+def generate_message(prefix_msg: str, msg: str, **kwargs):
+    """
+    Генерация сообщения лога для журнала
+    :param prefix_msg: str
+    :param msg: str
+    :param kwargs: dict
+    :return: str
+    """
+    msg = f"{prefix_msg}: {msg} \n"
+    if kwargs:
+        # print(kwargs)
+        msg += f"Additional info:"
+        for key, value in kwargs.items():
+            msg += f"\n{key}: {value}"
+    return msg
+
+
+info_logger, traceback_logger = init_logger()
+'''
+
+logger_conf = '''
+[loggers]
+keys=root,infoLogger,errorLogger
+
+[handlers]
+keys=fileInfoHandler,fileErrorHandler,consoleHandler
+
+[formatters]
+keys=myFormatter
+
+[logger_root]
+level=CRITICAL
+handlers=consoleHandler
+
+[logger_infoLogger]
+level=INFO
+handlers=fileInfoHandler
+qualname=infoLogger
+
+[logger_errorLogger]
+level=ERROR
+handlers=fileErrorHandler
+qualname=errorLogger
+
+[handler_consoleHandler]
+class=StreamHandler
+level=DEBUG
+formatter=myFormatter
+args=(sys.stdout,)
+
+[handler_fileInfoHandler]
+class=FileHandler
+formatter=myFormatter
+args=("logs/info.log",)
+
+[handler_fileErrorHandler]
+class=FileHandler
+formatter=myFormatter
+args=("logs/error.log",)
+
+[formatter_myFormatter]
+format=%(asctime)s - %(name)s - %(filename)s - %(levelname)s - %(message)s
+datefmt=
+'''
 
 requirements = """
 cryptography
 aiohttp
+aiohttp_session
 gunicorn
 #pyodbc
 #psycopg2

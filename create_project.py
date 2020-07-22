@@ -39,20 +39,20 @@ def main():
     tree_project(path, type_project, name)
 
 
-def tree_project(path, type, name):
+def tree_project(path, type_, name):
     slash = '/'
     # path to dirs
     root_prj = path + slash + name
     app = root_prj + slash + 'app'
-    views = app + slash + 'views'
+    api = app + slash + 'api'
     sql = app + slash + 'sql'
-    http = views + slash + 'http'
+    http = api + slash + 'http'
     get_api = http + slash + 'get_api'
     post_api = http + slash + 'post_api'
-    websocket = views + slash + 'websocket'
+    websocket = api + slash + 'websocket'
     # creates
-    if type != '':
-        if type == 'aiohttp':
+    if type_ != '':
+        if type_ == 'aiohttp':
             try:
                 os.mkdir(root_prj)
 
@@ -66,6 +66,14 @@ def tree_project(path, type, name):
 
                 file = open(root_prj + slash + 'utils.py', 'w')
                 file.write(templates.utils)
+                file.close()
+
+                file = open(root_prj+slash+'logger.py', 'w')
+                file.write(templates.logger_template)
+                file.close()
+
+                file = open(root_prj+slash+'logger.conf', 'w')
+                file.write(templates.logger_conf)
                 file.close()
 
                 file = open(root_prj + slash + 'requirements.txt', 'w')
@@ -96,13 +104,13 @@ def tree_project(path, type, name):
                 print('App dir is created')
 
             try:
-                os.mkdir(views)
+                os.mkdir(api)
                 os.mkdir(http)
                 os.mkdir(websocket)
                 os.mkdir(get_api)
                 os.mkdir(post_api)
 
-                file = open(views + slash + '__init__.py', 'w')
+                file = open(api + slash + '__init__.py', 'w')
                 file.write(templates.views_init)
                 file.close()
 
