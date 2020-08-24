@@ -1,4 +1,4 @@
-import sys, os, templates
+import sys, os
 import argparse
 
 parser = argparse.ArgumentParser('arguments')
@@ -40,133 +40,55 @@ def main():
 
 
 def tree_project(path, type_, name):
-    slash = '/'
-    # path to dirs
-    root_prj = path + slash + name
-    app = root_prj + slash + 'app'
-    api = app + slash + 'api'
-    sql = app + slash + 'sql'
-    http = api + slash + 'http'
-    get_api = http + slash + 'get_api'
-    post_api = http + slash + 'post_api'
-    websocket = api + slash + 'websocket'
-    # creates
+    file_routes = ["/entry.py",
+                   "/credentials.py",
+                   "/utils.py",
+                   "/logger.py",
+                   "/logger.conf",
+                   "/network.py",
+                   "/requirements.txt",
+                   "/app/__init__.py",
+                   "/app/app.py",
+                   "/app/routes.py",
+                   "/app/api/__init__.py",
+                   "/app/api/http/__init__.py",
+                   "/app/api/websocket/__init__.py",
+                   "/app/api/http/get_api/__init__.py",
+                   "/app/api/http/post_api/__init__.py",
+                   "/app/api/http/get_api/test_get.py",
+                   "/app/api/http/post_api/test_post.py",
+                   "/app/api/http/http_response.py",
+                   "/app/api/websocket/websocket_response.py",
+                   "/app/sql/sql_handler.py",
+                   "/app/sql/sql_queries.py"]
     if type_ != '':
         if type_ == 'aiohttp':
-            try:
-                os.mkdir(root_prj)
-
-                file = open(root_prj + slash + 'entry.py', 'w')
-                file.write(templates.entry)
-                file.close()
-
-                file = open(root_prj + slash + 'credentials.py', 'w')
-                file.write(templates.credentials)
-                file.close()
-
-                file = open(root_prj + slash + 'utils.py', 'w')
-                file.write(templates.utils)
-                file.close()
-
-                file = open(root_prj + slash + 'logger.py', 'w')
-                file.write(templates.logger_template)
-                file.close()
-
-                file = open(root_prj + slash + 'logger.conf', 'w')
-                file.write(templates.logger_conf)
-                file.close()
-
-                file = open(root_prj + slash + 'network.py', 'w')
-                file.write(templates.network_template)
-                file.close()
-
-                file = open(root_prj + slash + 'requirements.txt', 'w')
-                file.write(templates.requirements)
-                file.close()
-            except OSError:
-                print(OSError.errno)
-            finally:
-                print('Project root is created')
-
-            try:
-                os.mkdir(app)
-
-                file = open(app + slash + '__init__.py', 'w')
-                file.write(templates.app_init)
-                file.close()
-
-                file = open(app + slash + 'app.py', 'w')
-                file.write(templates.app)
-                file.close()
-
-                file = open(app + slash + 'routes.py', 'w')
-                file.write(templates.routes)
-                file.close()
-            except OSError:
-                print(OSError.errno)
-            finally:
-                print('App dir is created')
-
-            try:
-                os.mkdir(api)
-                os.mkdir(http)
-                os.mkdir(websocket)
-                os.mkdir(get_api)
-                os.mkdir(post_api)
-
-                file = open(api + slash + '__init__.py', 'w')
-                file.write(templates.views_init)
-                file.close()
-
-                file = open(http + slash + '__init__.py', 'w')
-                file.write(templates.http_init)
-                file.close()
-
-                file = open(get_api + slash + '__init__.py', 'w')
-                file.write(templates.get_api_init)
-                file.close()
-                file = open(get_api + slash + 'test_get.py', 'w')
-                file.write(templates.test_get)
-                file.close()
-
-                file = open(post_api + slash + '__init__.py', 'w')
-                file.write(templates.post_api_init)
-                file.close()
-                file = open(post_api + slash + 'test_post.py', 'w')
-                file.write(templates.test_post)
-                file.close()
-
-                file = open(websocket + slash + '__init__.py', 'w')
-                file.write(templates.websocket_init)
-                file.close()
-
-                file = open(http + slash + 'http_response.py', 'w')
-                file.write(templates.http_response)
-                file.close()
-
-                file = open(websocket + slash + 'ws_response.py', 'w')
-                file.write(templates.ws_response)
-                file.close()
-
-            except OSError:
-                print(OSError.errno)
-            finally:
-                print('Views dir is created')
-
-            try:
-                os.mkdir(sql)
-
-                file = open(sql + slash + 'sql_handler.py', 'w')
-                file.write(templates.sql_handler)
-                file.close()
-
-                file = open(sql + slash + 'sql_queries.py', 'w')
-                file.close()
-
-            except OSError:
-                print(OSError.errno)
-            finally:
-                print('SQL dir is created')
+            root = f"{path}/{name}"
+            os.mkdir(root)  # create root project
+            with open("aiohttp_template.txt", "r", encoding='utf-8-sig') as file:
+                re = file.read()
+                for route in file_routes:
+                    if len(route.split("/")) <= 2:
+                        pass
+                    else:
+                        route_parts = route[1:route.rfind("/")]
+                        parts = route_parts.split("/")
+                        tmp = ""
+                        for part in parts:
+                            if len(parts) <= 1:
+                                tmp = f"/{part}"
+                            else:
+                                tmp += f"/{part}"
+                        if os.path.exists(f"{root}{tmp}"):
+                            pass
+                        else:
+                            try:
+                                os.mkdir(f"{root}{tmp}")
+                            except Exception as e:
+                                print(e)
+                    writteble_file = open(root+route, 'w', encoding="utf-8-sig")
+                    writteble_file.write(re[re.find(f"[{route}]")+len(f"[{route}]")+1:re.rfind(f"[{route}]")])
+                    writteble_file.close()
         else:
             print('incorrect key')
 

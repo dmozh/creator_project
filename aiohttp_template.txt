@@ -1,5 +1,13 @@
-entry = \
-    """  
+[/requirements.txt]
+cryptography
+aiohttp
+aiohttp_session
+gunicorn
+#pyodbc
+#psycopg2
+[/requirements.txt]
+
+[/entry.py]
 from aiohttp import web
 import argparse
 from app import create_app
@@ -11,26 +19,91 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args.path, args.port)
     web.run_app(app, path=args.path, port=args.port)
-"""
+[/entry.py]
 
-credentials = \
-    """
+[/credentials.py]
 #this file uses for creds to project
 #its need add to git ignore
-"""
+[/credentials.py]
 
-utils = \
-    """
+[/utils.py]
 #this file have util function
-"""
+from urllib.parse import unquote
+import json
 
-app_init = \
+
+def get_params(url: str):
     """
+    Get params from url
+    :param url: str url
+    :return: dict all params
+    """
+    params = {}
+    symbols = ['{',
+               '}',
+               '[',
+               ']',
+               '(',
+               ')',
+               "'",
+               '"',
+               '`',
+               '~',
+               ',',
+               ';',
+               ':',
+               '.',
+               '<',
+               '>',
+               '!',
+               '?']
+
+    def replacing(param_value: str):
+        param_value = unquote(param_value)
+        for symbol in symbols:
+            param_value = param_value.replace("symb", "")
+        return param_value
+
+    query_string = url.split('?')[1]
+    params_list = query_string.split("&")
+    for item in params_list:
+        key, value = item.split('=')
+        params[key] = replacing(value)
+
+    return params
+
+
+def replace_screen_symbols(text: str):
+    """
+    Function replacing all special symbols from text
+    :param text: text
+    :return: reformat text
+    """
+    symbols = {'&nbsp;': ' ', '&pound;': '£', '&euro;': '€', '&para;': '¶', '&sect;': '§', '&copy;': '©', '&reg;': '®',
+               '&trade;': '™',
+               '&deg;': '°', '&plusmn;': '±', '&frac14;': '¼', '&frac12;': '½', '&frac34;': '¾', '&times;': '×',
+               '&divide;': '÷', '&fnof;': 'ƒ', '&Alpha;': 'Α', '&Beta;': 'Β', '&Gamma;': 'Γ', '&Delta;': 'Δ',
+               '&Epsilon;': 'Ε', '&Zeta;': 'Ζ', '&Eta;': 'Η', '&Theta;': 'Θ', '&Iota;': 'Ι', '&Kappa;': 'Κ',
+               '&Lambda;': 'Λ', '&Mu;': 'Μ', '&Nu;': 'Ν', '&Xi;': 'Ξ', '&Omicron;': 'Ο', '&Pi;': 'Π', '&Rho;': 'Ρ',
+               '&Sigma;': 'Σ', '&Tau;': 'Τ', '&Upsilon;': 'Υ', '&Phi;': 'Φ', '&Chi;': 'Χ', '&Psi;': 'Ψ', '&Omega;': 'Ω',
+               '&alpha;': 'α', '&beta;': 'β', '&gamma;': 'γ', '&delta;': 'δ', '&epsilon;': 'ε', '&zeta;': 'ζ',
+               '&eta;': 'η', '&theta;': 'θ', '&iota;': 'ι', '&kappa;': 'κ', '&lambda;': 'λ', '&mu;': 'μ', '&nu;': 'ν',
+               '&xi;': 'ξ', '&omicron;': 'ο', '&pi;': 'π', '&rho;': 'ρ', '&sigmaf;': 'ς', '&sigma;': 'σ', '&tau;': 'τ',
+               '&upsilon;': 'υ', '&phi;': 'φ', '&chi;': 'χ', '&psi;': 'ψ', '&omega;': 'ω', '&larr;': '←', '&uarr;': '↑',
+               '&rarr;': '→', '&darr;': '↓', '&harr;': '↔', '&spades;': '♠', '&clubs;': '♣', '&hearts;': '♥', '&diams;':
+                   '♦', '&quot;': '"', '&amp;': '&', '&lt;': '<', '&gt;': '>', '&hellip;': '…', '&prime;': '′',
+               '&Prime;': '″', '&ndash;': '–', '&mdash;': '—', '&lsquo;': '‘', '&rsquo;': '’', '&sbquo;': '‚',
+               '&ldquo;': '“', '&rdquo;': '”', '&bdquo;': '„', '&laquo;': '«', '&raquo;': '»'}
+    for key, value in symbols.items():
+        text = text.replace(key, value)
+    return text
+[/utils.py]
+
+[/app/__init__.py]
 from .app import create_app
-"""
+[/app/__init__.py]
 
-app = \
-    """
+[/app/app.py]
 import base64
 from cryptography import fernet
 from aiohttp import web
@@ -43,7 +116,7 @@ async def create_app():
     app = web.Application()
     setup_routes(app)
     return app
-    
+
 #create app for using ws
 #async def create_app():
 #    app = web.Application()
@@ -52,11 +125,10 @@ async def create_app():
 #    setup(app, EncryptedCookieStorage(secret_key))
 #    setup_routes(app)
 #    app.wslist = []
-#    return app    
-"""
+#    return app
+[/app/app.py]
 
-routes = \
-    """
+[/app/routes.py]
 from .api import http, websocket
 import credentials as crs
 
@@ -64,20 +136,29 @@ import credentials as crs
 def setup_routes(app):
     app.router.add_route('GET', f'/test_get', http.get_api.test_get.test_json)
     app.router.add_route('POST', f'/test_post', http.post_api.test_post.test_json)
-"""
+[/app/routes.py]
 
-views_init = \
-    """
+[/app/api/__init__.py]
 from . import http, websocket
-"""
+[/app/api/__init__.py]
 
-http_init = """from . import get_api, post_api, http_response"""
-websocket_init = """from . import ws_response"""
+[/app/api/http/__init__.py]
+from . import get_api, post_api, http_response
+[/app/api/http/__init__.py]
 
-get_api_init = """from . import test_get"""
-post_api_init = """from . import test_post"""
+[/app/api/websocket/__init__.py]
+from . import ws_response
+[/app/api/websocket/__init__.py]
 
-test_get = """
+[/app/api/http/get_api/__init__.py]
+from . import test_get
+[/app/api/http/get_api/__init__.py]
+
+[/app/api/http/post_api/__init__.py]
+from . import test_post
+[/app/api/http/post_api/__init__.py]
+
+[/app/api/http/get_api/test_get.py]
 from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
@@ -85,15 +166,16 @@ from network import base_request, TypeRequest
 
 
 async def test_json(request):
-    headers = {'Access-Control-Allow-Origin': '*'}
+    headers = {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': request.headers['Origin']}
     if request.method == 'GET':
         response_msg = {}
 
         response_msg['msg'] = 'test'
         response_msg['method'] = 'get'
         return web.json_response(response_msg, headers=headers)
-"""
-test_post = """
+[/app/api/http/get_api/test_get.py]
+
+[/app/api/http/post_api/test_post.py]
 from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
@@ -101,30 +183,28 @@ from network import base_request, TypeRequest
 
 
 async def test_json(request):
-    headers = {'Access-Control-Allow-Origin': '*'}
+    headers = {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': request.headers['Origin']}
     if request.method == 'POST':
         response_msg = {}
 
         response_msg['msg'] = 'test'
         response_msg['method'] = 'post'
         return web.json_response(response_msg, headers=headers)
-"""
+[/app/api/http/post_api/test_post.py]
 
-http_response = \
-    """
+[/app/api/http/http_response.py]
 from app.sql.sql_handler import sql_exec as handle
 from aiohttp import web
 import json
 
 
 async def test(request):
-    headers = {'Access-Control-Allow-Origin': '*', 'content-type': 'text/html'}
+    headers = {'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Origin': request.headers['Origin']}
     response = f'<div>test</div>'
     return web.Response(body=response, headers=headers)
-"""
+[/app/api/http/http_response.py]
 
-ws_response = \
-    """
+[/app/api/websocket/websocket_response.py]
 from aiohttp import web, WSMsgType
 import json, asyncio
 
@@ -157,26 +237,25 @@ async def websocket_handler(request):
 
     print('websocket connection closed')
     print(ws)
-    return ws"""
+    return ws
+[/app/api/websocket/websocket_response.py]
 
-sql_handler = \
-    """
-#imports
-#
-#
-
-
+[/app/sql/sql_handler.py]
 async def sql_exec(query, **kwargs):
-    '''
+    """
     Function to handle sql queries
     :param query: string key query
     :param kwargs: dict any kwargs
     :return: bool, json
-    '''
+    """
     pass
-"""
+[/app/sql/sql_handler.py]
 
-logger_template = '''
+[/app/sql/sql_queries.py]
+
+[/app/sql/sql_queries.py]
+
+[/logger.py]
 import logging
 import logging.config
 import os
@@ -204,7 +283,7 @@ def generate_message(prefix_msg: str, msg: str, **kwargs):
     :param kwargs: dict
     :return: str
     """
-    msg = f"{prefix_msg}: {msg} \n"
+    msg = f"{prefix_msg}: {msg}\n"
     if kwargs:
         # print(kwargs)
         msg += f"Additional info:"
@@ -214,9 +293,9 @@ def generate_message(prefix_msg: str, msg: str, **kwargs):
 
 
 info_logger, traceback_logger = init_logger()
-'''
+[/logger.py]
 
-logger_conf = '''
+[/logger.conf]
 [loggers]
 keys=root,infoLogger,errorLogger
 
@@ -259,9 +338,9 @@ args=("logs/error.log",)
 [formatter_myFormatter]
 format=%(asctime)s - %(name)s - %(filename)s - %(levelname)s - %(message)s
 datefmt=
-'''
+[/logger.conf]
 
-network_template = '''
+[/network.py]
 import requests
 import logger
 import credentials
@@ -322,29 +401,22 @@ class BaseRequest:
             else:
                 logger.info_logger.warning(
                     logger.generate_message(f"{request_type.name} request", f"Запрос к {url} завершен, но ответ "
-                                                                            f"не был получен из-за ошибки. Код статуса ошибки: {response.status_code}",
+                                            f"не был получен из-за ошибки. Код статуса ошибки: {response.status_code}",
                                             headers=response.headers))
         except requests.exceptions.ConnectionError as err:
             logger.info_logger.error(
                 logger.generate_message(f"{request_type.name} request",
-                                        f"{err}\nЗапрос к {url} не смог получить ответа. Код статус: {500}"))
+                                        f"{err}\n"
+                                        f"Запрос к {url} не смог получить ответа. Код статус: {500}"))"
         except TimeoutError as e:
             logger.info_logger.error(
                 logger.generate_message(f"{request_type.name} request",
-                                        f"{e}\nЗапрос к {url} не смог получить ответа. Код статус: {500}"))
+                                        f"{e}\n"
+                                        f"Запрос к {url} не смог получить ответа. Код статус: {500}"))"
         except Exception as exception:
             logger.traceback_logger.critical(exception, exc_info=True)
         return response
 
 
 base_request = BaseRequest(credentials.HOST_API_URL, {"Authorization": credentials.AUTH_HEADER})
-'''
-
-requirements = """
-cryptography
-aiohttp
-aiohttp_session
-gunicorn
-#pyodbc
-#psycopg2
-"""
+[/network.py]
